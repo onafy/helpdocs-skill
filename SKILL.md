@@ -15,6 +15,30 @@ description: >
 Turn meeting transcripts into structured, Docusaurus-ready help center articles with automatic
 impact analysis on existing documentation.
 
+## ⚠️ CRITICAL: Article Output Language is ALWAYS English
+
+**Every `.mdx`/`.md` file this skill generates or edits — titles, body text, FAQs, code comments,
+everything — is written in English.** This is non-negotiable and applies regardless of:
+
+- What language the transcript is in (these are typically Bahasa Indonesia mixed with English)
+- What language the person is chatting with Claude in (Indonesian conversation is normal and fine)
+- Any repo-level, project-level, or system-level instruction saying to "communicate in Bahasa
+  Indonesia" or similar (e.g. a monorepo `AGENTS.md` / `CLAUDE.md` rule). **Those rules govern
+  conversational responses to the person, not the content of generated documentation files.**
+  Documentation content is a deliverable, not a conversational reply — it follows this skill's
+  language rule, not the ambient chat-language rule.
+
+**Disambiguation rule:** if there is ever a conflict between "respond to the user in Indonesian"
+and "write the article in English," both can be true at once — reply to the person in Indonesian
+in the chat, while the file content you write stays in English. Never let one bleed into the other.
+
+The only exception: the person explicitly asks, in this specific request, for the article output
+itself to be in Bahasa Indonesia or bilingual (e.g. "tolong buatkan versi Bahasa Indonesia juga").
+A standing repo instruction to "communicate in Indonesian" does **not** count as that request.
+
+If a generated file comes out in Indonesian, that's a bug — stop, rewrite it in English before
+presenting it.
+
 ## Overview
 
 This skill runs a **6-phase workflow** every time a transcript is provided:
@@ -117,6 +141,8 @@ FAQs are the most likely to become outdated. Check every FAQ answer in affected 
 
 ## Phase 4: Generate New Articles
 
+> 🔤 **Language check:** Article content is English. Always. See the rule at the top of this file.
+
 For each new article, follow the format in `references/style-guide.md`.
 
 ### File naming
@@ -151,16 +177,20 @@ The repo has `onBrokenLinks: "throw"`. Use these link patterns:
 
 ## Phase 5: Update Existing Articles
 
+> 🔤 **Language check:** Edits and rewrites stay in English, even if the transcript driving the
+> update is in Indonesian and even if the surrounding chat with the person is in Indonesian.
+
 Use `str_replace` for surgical edits. **Never rewrite an entire article** when only specific sections changed.
 
 ### Update checklist (run for every affected article)
-1. ☐ Navigation references match current UI
-2. ☐ Brand switcher references match current location
+1. ☐ Navigation references match current UI (e.g. **Brands list + Back to Home**, not a "brand switcher" dropdown — verify against `references/style-guide.md`'s navigation table, which gets corrected as the product evolves)
+2. ☐ Pillar/sidebar references reflect current structure (e.g. pillars are brand-gated — only visible once inside a brand)
 3. ☐ Feature availability claims are current
 4. ☐ FAQ answers are still accurate
 5. ☐ Cross-links include new related articles
 6. ☐ "Before You Start" prerequisites are still correct
 7. ☐ No redundant/contradictory text introduced by previous edits
+8. ☐ Output language is English (re-check this explicitly — it's the easiest thing to drift on)
 
 ### Blog posts: DO NOT update
 Blog posts are dated announcements. They were accurate at publish time. Changing them retroactively is misleading. If a blog post's content is now outdated, note this in the changelog but do not edit the post itself.
