@@ -21,7 +21,7 @@ impact analysis on existing documentation.
 everything — is written in English.** This is non-negotiable and applies regardless of:
 
 - What language the transcript is in (these are typically Bahasa Indonesia mixed with English)
-- What language the person is chatting with Claude in (Indonesian conversation is normal and fine)
+- What language the person is chatting with AI in (Indonesian conversation is normal and fine)
 - Any repo-level, project-level, or system-level instruction saying to "communicate in Bahasa
   Indonesia" or similar (e.g. a monorepo `AGENTS.md` / `CLAUDE.md` rule). **Those rules govern
   conversational responses to the person, not the content of generated documentation files.**
